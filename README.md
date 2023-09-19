@@ -1,12 +1,12 @@
-# DataDog Metrics Management Tool
+# Datadog Metrics without Limits Management Tool
 
-This tool is designed to help you manage and configure metrics in your DataDog environment efficiently. It leverages the DataDog API and Go programming language to automate tasks related to metric configuration and management.
+This tool is designed to help you manage and configure custom metrics tags in your Datadog environment efficiently. It leverages the Datadog API and Go programming language to automate tasks related to metric configuration and management.
 
 ## Prerequisites
 
 Before using this tool, make sure you have the following prerequisites in place:
 
-- Datadog API Key: You'll need an API key to authenticate with the DataDog API. Set it as an environment variable named `DATADOG_API_KEY`.
+- Datadog API Key: You'll need an API key to authenticate with the Datadog API. Set it as an environment variable named `DATADOG_API_KEY`.
 
 - Datadog Application Key: Similarly, set your application key as an environment variable named `DATADOG_APPLICATION_KEY`.
 
@@ -15,13 +15,13 @@ Before using this tool, make sure you have the following prerequisites in place:
 1. Clone this repository to your local machine:
 
    ```shell
-   git clone https://github.com/iamsaso/DataDog.git
+   git clone https://github.com/iamsaso/Datadog-Metrics-without-Limits.git
    ```
 
 2. Navigate to the project directory:
 
    ```shell
-   cd DataDog
+   cd Datadog-Metrics-without-Limits
    ```
 
 3. Build and run the application:
