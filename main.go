@@ -14,11 +14,11 @@ import (
 )
 
 type RateLimitInfo struct {
-    Limit     int
-    Name      string
-    Period    int
-    Remaining int
-    Reset     int
+	Limit     int
+	Name      string
+	Period    int
+	Remaining int
+	Reset     int
 }
 
 func main() {
@@ -126,6 +126,8 @@ func main() {
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Error when calling `MetricsApi.UpdateTagConfiguration`: %v\n", err)
 				fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+			} else {
+				fmt.Println("Metric Tags: ", tagConfigurationnResp.Data.Attributes.Tags)
 			}
 		} else {
 			tag := datadogV2.MetricTagConfigurationCreateRequest{
@@ -133,35 +135,35 @@ func main() {
 					Type: datadogV2.METRICTAGCONFIGURATIONTYPE_MANAGE_TAGS,
 					Id:   metricID,
 					Attributes: &datadogV2.MetricTagConfigurationCreateAttributes{
-						Tags: metricResp.Data.Attributes.ActiveTags,
+						Tags:       metricResp.Data.Attributes.ActiveTags,
 						MetricType: metricType,
 					},
 				},
 			}
-	
+
 			tagConfigurationnResp, r, err = metricApiV2.CreateTagConfiguration(ctx, metricID, tag)
 			handleRateLimit(r)
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Error when calling `MetricsApi.UpdateTagConfiguration`: %v\n", err)
 				fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+			} else {
+				fmt.Println("Metric Tags: ", tagConfigurationnResp.Data.Attributes.Tags)
 			}
 		}
-
-		fmt.Println("Metric Tags: ", tagConfigurationnResp.Data.Attributes.Tags)
 	}
 }
 
 func handleRateLimit(r *http.Response) {
-    if r != nil {
-        //limit, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Limit"))
-        //name := r.Header.Get("X-Ratelimit-Name")
-        //period, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Period"))
-        remaining, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Remaining"))
-        reset, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Reset"))
+	if r != nil {
+		//limit, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Limit"))
+		//name := r.Header.Get("X-Ratelimit-Name")
+		//period, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Period"))
+		remaining, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Remaining"))
+		reset, _ := strconv.Atoi(r.Header.Get("X-Ratelimit-Reset"))
 
 		if remaining == 0 {
 			fmt.Println("Rate Limit Reached. Sleeping for ", reset, " seconds.")
 			time.Sleep(time.Duration(reset) * time.Second)
 		}
-    }
+	}
 }
